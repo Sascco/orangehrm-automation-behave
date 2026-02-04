@@ -1,15 +1,29 @@
-from src.pages.base_page import BasePage
-from src.utils.locators import LoginPageLocators
+from selenium.webdriver.common.by import By
+from src.core.base_page import BasePage
 
 class LoginPage(BasePage):
+    # Locators
+    _username_field = (By.NAME, "username")
+    _password_field = (By.NAME, "password")
+    _login_button = (By.CSS_SELECTOR, "button[type='submit']")
+    _error_message = (By.CSS_SELECTOR, ".oxd-alert-content-text")
+
+    def __init__(self, driver):
+        super().__init__(driver)
+
     def enter_username(self, username):
-        self.type_text(LoginPageLocators.USERNAME_INPUT, username)
+        self.type(self._username_field, username)
 
     def enter_password(self, password):
-        self.type_text(LoginPageLocators.PASSWORD_INPUT, password)
+        self.type(self._password_field, password)
 
     def click_login(self):
-        self.click(LoginPageLocators.LOGIN_BUTTON)
+        self.click(self._login_button)
+
+    def login(self, username, password):
+        self.enter_username(username)
+        self.enter_password(password)
+        self.click_login()
 
     def get_error_message(self):
-        return self.get_text(LoginPageLocators.ERROR_MESSAGE)
+        return self.get_text(self._error_message)
