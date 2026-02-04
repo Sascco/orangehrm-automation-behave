@@ -1,0 +1,17 @@
+# Virtual env
+.venv/
+
+# Environment variables
+.env
+
+# Python cache
+__pycache__/
+*.pyc
+
+# Test artifacts
+test-reports/
+screenshots/
+
+# OS / editor
+.DS_Store
+.vscode/

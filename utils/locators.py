@@ -1,4 +1,11 @@
-url_orangehrm = https://opensource-demo.orangehrmlive.com/web/index.php/auth/login
-username = 'username'
-password = 'password'
-login_button = '//button[@type="submit"]'  # XPath locator for login button= //*[@id="app"]/div[1]/div/div[1]/div/div[2]/div[2]/form/div[3]/button
+from selenium.webdriver.common.by import By
+
+class LoginPageLocators:
+    USERNAME_INPUT = (By.NAME, "username")
+    PASSWORD_INPUT = (By.NAME, "password")
+    LOGIN_BUTTON = (By.CSS_SELECTOR, "button[type='submit']")
+    ERROR_MESSAGE = (By.CSS_SELECTOR, ".oxd-alert-content-text")
+    REQUIRED_FIELD_ERRORS = (By.CSS_SELECTOR, ".oxd-input-group__message")
+
+class DashboardPageLocators:
+    HEADER_TEXT = (By.CSS_SELECTOR, ".oxd-topbar-header-breadcrumb h6")

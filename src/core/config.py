@@ -1,0 +1,1 @@
+Base_url_orangehrm = "https://opensource-demo.orangehrmlive.com/web/index.php/auth/login"
