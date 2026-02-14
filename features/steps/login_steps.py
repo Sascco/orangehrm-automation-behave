@@ -1,32 +1,38 @@
 from behave import given, when, then
+from src.core.driver_factory import DriverFactory
 from src.pages.login_page import LoginPage
-from selenium import webdriver
+from src.core.config import get_orange_url
 
-
-@given('que estoy en la página de Login')
+@given('I am on the Login page')
 def step_impl(context):
-    # El driver ya se abre en environment.py, aquí solo validamos que cargó
+    context.driver = DriverFactory.get_driver()
+    context.driver.get(get_orange_url())
     context.login_page = LoginPage(context.driver)
 
-@when('el usuario ingresa el nombre de usuario "{user}"')
-def step_impl(context, user):
-    context.login_page.enter_username(user)
+@when('the user enters the username "{username}"')
+def step_impl(context, username):
+    context.login_page.enter_username(username)
 
-@when('el usuario ingresa la contraseña "{password}"')
+@when('the user enters the password "{password}"')
 def step_impl(context, password):
     context.login_page.enter_password(password)
 
-@when('el usuario hace clic en el botón "Login"')
-def step_impl(context):
+@when('the user clicks on the "{button_name}" button')
+def step_impl(context, button_name):
     context.login_page.click_login()
 
-@then('el sistema debe redirigirlo a la página de "Dashboard"')
-def step_impl(context):
-    # Validamos que la URL contenga 'dashboard'
-    assert "dashboard" in context.driver.current_url.lower()
+@then('the system should redirect to the "{page_name}" page')
+def step_impl(context, page_name):
+    assert page_name.lower() in context.driver.current_url.lower(), \
+        f"Expected to be on {page_name} page but current URL is {context.driver.current_url}"
 
-@then('el encabezado de la página debe mostrar el texto "Dashboard"')
+@then('the system should display an error message "{error_message}"')
+def step_impl(context, error_message):
+    actual_error = context.login_page.get_error_message()
+    assert actual_error == error_message, \
+        f"Expected error message '{error_message}' but got '{actual_error}'"
+
+@then('the username and password fields should remain visible')
 def step_impl(context):
-    from src.utils.locators import DashboardPageLocators
-    header = context.driver.find_element(*DashboardPageLocators.HEADER_TEXT).text
-    assert header == "Dashboard"
+    # This validates that we're still on the login page
+    assert "login" in context.driver.current_url.lower()

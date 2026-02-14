@@ -1,27 +1,27 @@
-Feature: Ver pagina para hacer Inicio de sesión
-    Como usuario registrado
-    Quiero diligenciar el formulario de ingreso para poder acceder a la plaataforma
+Feature: Login Page
+    As a registered user
+    I want to fill out the login form to access the platform
 
     Background:
-        Given que estoy en la página de Login
-    
-Scenario: Inicio de sesión exitoso
-        When el usuario ingresa el nombre de usuario "Admin"
-        And el usuario ingresa la contraseña "admin123"
-        And el usuario hace clic en el botón "Login"
-        Then el sistema debe redirigirlo a la página de "Dashboard"
-        And el encabezado de la página debe mostrar el texto "Dashboard"
+        Given I am on the Login page
 
-Scenario: Inicio de sesión no exitoso
-        When el usuario ingresa el nombre de usuario "123456789"
-        And el usuario ingresa la contraseña "123456789"
-        And el usuario hace clic en el botón "Login"
-        Then el sistema debe mostrar un mensaje de error "Invalid credentials"
-        And los campos de "Username" y "Password" deben seguir visibles
+    Scenario: Successful login
+        When the user enters the username "Admin"
+        And the user enters the password "admin123"
+        And the user clicks on the "Login" button
+        Then the system should redirect to the "Dashboard" page
+        And the Dashboard page header should display the text "Dashboard"
 
-Scenario: Intento de inicio de sesión con campos vacíos
-        When el usuario deja el campo de nombre de usuario vacío
-        And el usuario deja el campo de contraseña vacío
-        And el usuario hace clic en el botón "Login"
-        Then el sistema debe mostrar el mensaje "Required" en ambos campos
-        And el usuario debe permanecer en la página de inicio de sesión
+    Scenario: Unsuccessful login
+        When the user enters the username "123456789"
+        And the user enters the password "123456789"
+        And the user clicks on the "Login" button
+        Then the system should display an error message "Invalid credentials"
+        And the username and password fields should remain visible
+
+    Scenario: Login attempt with empty fields
+        When the user leaves the username field empty
+        And the user leaves the password field empty
+        And the user clicks on the "Login" button
+        Then the system should display a "Required" message on both fields
+        And the user should remain on the login page
